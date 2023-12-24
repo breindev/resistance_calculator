@@ -48,7 +48,7 @@ Label(F_variacion,text="°C").pack(side=LEFT)
 
 #------------------ RESULTADO --------------------
 F_respuesta = LabelFrame(FRAME_CONT,text="RESULTADO")
-lbl = ["NÚMERO DE BANDAS :","VALOR :",
+lbl = ["NÚMERO DE BANDAS :","VALORES DE BANDAS :",
        "TOLERANCIA :","V. NOMINAL MÁXIMO :",
        "VALOR NOMINAL :","V. NOMINAL MÍNIMO :",
        "TEMPERATURA :","TOLERANCIA CON °C :","% VARIACIÓN CON °C :"]
