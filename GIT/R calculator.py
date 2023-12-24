@@ -48,10 +48,10 @@ Label(F_variacion,text="°C").pack(side=LEFT)
 
 #------------------ RESULTADO --------------------
 F_respuesta = LabelFrame(FRAME_CONT,text="RESULTADO")
-lbl = ["NÚMERO DE BANDAS :","VALORES DE BANDAS :",
-       "TOLERANCIA :","V. NOMINAL MÁXIMO :",
+lbl = ["NÚMERO DE BANDAS :","VALORES DE BANDAS:",
+       "TOLERANCIA +/- :","V. NOMINAL MÁXIMO :",
        "VALOR NOMINAL :","V. NOMINAL MÍNIMO :",
-       "TEMPERATURA :","TOLERANCIA CON °C :","% VARIACIÓN CON °C :"]
+       "TEMPERATURA :","TOLERANCIA CON °C  +/-:","% VARIACIÓN CON °C  +/-:"]
 resultado = Text(F_respuesta,width=50,height=10)
 resultado.grid(row=1,column=0,padx=10,pady=10)
 #--------------------------------------------------
@@ -75,7 +75,7 @@ def calculate(n_bandas):
                 tolerancia = valor_nominal*(float(c5.get_select())/100)
                 minimo,maximo= valor_nominal-tolerancia,valor_nominal+tolerancia
             case "5":
-                num_resistencia.set(int(c1.get_select()+c2.get_select())+c3.get_select())
+                num_resistencia.set(int(c1.get_select()+c2.get_select()+c3.get_select()))
                 valor_nominal = num_resistencia.get()*float(c4.get_select())
                 tolerancia = valor_nominal*(float(c5.get_select())/100)
                 minimo,maximo= valor_nominal-tolerancia,valor_nominal+tolerancia
