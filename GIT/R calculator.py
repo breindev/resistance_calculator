@@ -6,10 +6,10 @@ from files.class_widget import Combo,Banda
 
 main = Tk()
 widht,height = int(main.winfo_screenwidth()/2),int(main.winfo_screenheight()/2)
-main.title("R calculator-v2024.01.1 [Developed by Breindev]")
+main.title("R calculator-v2024.01.1 [Developed by Breyner]")
 main.resizable(0,0)
 main.iconbitmap("files/logo.ico")
-main.geometry(f"{widht-int(widht/3)}x{height+50}+{widht-int(widht/2)}+{height-int(height/2)}")
+main.geometry(f"{widht-int(widht/3)}x{height+100}+{widht-int(widht/2)}+{height-int(height/2)}")
 Label(main, text="CALCULADORA DE RESISTENCIA",font=("arial",15,"bold")).pack(pady=(10,0))
 FRAME_CONT = Frame(main)
 FRAME_CONT.pack(fill=BOTH,expand=TRUE,pady=10,padx=10)
@@ -51,19 +51,21 @@ F_respuesta = LabelFrame(FRAME_CONT,text="RESULTADO")
 lbl = ["NÚMERO DE BANDAS :","VALORES DE BANDAS:",
        "TOLERANCIA +/- :","V. NOMINAL MÁXIMO :",
        "VALOR NOMINAL :","V. NOMINAL MÍNIMO :",
-       "TEMPERATURA :","TOLERANCIA CON °C  +/-:","% VARIACIÓN CON °C  +/-:"]
-resultado = Text(F_respuesta,width=50,height=10)
+       "TEMPERATURA :","TOLERANCIA CON Temp.  +/-:","VALOR N. Max CON Temp. :","VALOR NOMINAL CON Temp. :","VALOR N. Min CON Temp. :","% DE VARIACIÓN CON Temp.  +/-:"]
+resultado = Text(F_respuesta,width=50,height=15)
 resultado.grid(row=1,column=0,padx=10,pady=10)
 #--------------------------------------------------
 
 def calculate(n_bandas):
-    num_resistencia = IntVar()
-    valor_nominal = 0
-    minimo,maximo= 0,0
-    tolerancia = 0
-    porcentaje_tolerancia = 0
-    tolerancia_temp = 0
     try: 
+        num_resistencia = IntVar()
+        valor_nominal = 0
+        minimo,maximo= 0,0
+        tolerancia = 0
+        tolerancia_temp = 0
+        valor_nominal_temp = 0
+        porcentaje_tolerancia = 0
+        minimo_temp,maximo_temp = 0,0
         if n_bandas in "34":
             num_resistencia.set(int(c1.get_select()+c2.get_select()))
             valor_nominal = num_resistencia.get()*float(c4.get_select())
@@ -87,14 +89,21 @@ def calculate(n_bandas):
                 # TOLERANCIA CON TEMPERATURA            
                 tolerancia_temp =  round(valor_nominal*(int(c6.get_select())/1000000)*int(Temperatura.get()),4)
                 # PORCENTAJE DE TOLERANCIA CON VARIACION DE TEMPERATURA
+                if Temperatura.get()[0] == "+": valor_nominal_temp = valor_nominal+tolerancia_temp
+                elif Temperatura.get()[0] == "-": valor_nominal_temp = valor_nominal-tolerancia_temp
+                else:
+                    raise ValueError("La Temperatura debe tener un caracter iniciarl de + o -")
+                minimo_temp,maximo_temp = valor_nominal_temp-tolerancia_temp,valor_nominal_temp+tolerancia_temp
                 porcentaje_tolerancia = round((tolerancia_temp/valor_nominal)*100,4)
-        datos_resultado = [n_bandas,num_resistencia.get(),tolerancia,maximo,valor_nominal,minimo,Temperatura.get(),tolerancia_temp,porcentaje_tolerancia]
-        for i in range(9):
-            simbolo = ("\n" if i in [0,1,6,7,8] else " Ω\n") if i in [0,1,2,3,4,5] else ("%\n" if i == 8 else "°C\n")
-            resultado.insert('end',f"%25s {datos_resultado[i]}"%(lbl[i])+simbolo)
-        resultado.insert('end',f"%40s"%('-'*30)+"\n")
+        datos_resultado = [n_bandas,num_resistencia.get(),tolerancia,maximo,valor_nominal,minimo,Temperatura.get(),tolerancia_temp,maximo_temp,valor_nominal_temp,minimo_temp,porcentaje_tolerancia]
+        resultado.insert('end',"%50s"%('='*50)+"\n")
+        for i in range(12):
+            if i == 6: resultado.insert('end',"%40s\n"%('-'*30))
+            simbolo = ("\n" if i in [0,1,6,11] else " Ω\n") if i in [0,1,2,3,4,5,7,8,9,10] else ("%\n" if i == 11 else "°C\n")
+            resultado.insert('end',f"%30s {datos_resultado[i]}"%(lbl[i])+simbolo)
+        resultado.insert('end',"%50s"%('='*50)+"\n")
     
-    except(ValueError):
+    except(Exception):
         messagebox.showinfo(message="EXISTEN DATOS SELECCIONADOS\nQUE NO SON VÁLIDOS.", title="Advertencia", icon = "warning")
 Button(FRAME_CONT,text="CALCULAR",bg="lightskyblue",font=("arial",11,"bold"),cursor="hand2",command=lambda:calculate(Boton_Select.get())).pack(side=TOP,ipady=10,ipadx=10,padx=20)
 F_respuesta.pack()
