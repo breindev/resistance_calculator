@@ -2,11 +2,12 @@
 App para escritorio desarrollada en python, puede calcular el valor de la resistencia de 3,4,5 y 6 bandas con resultado en ohmios (Ω)
 
 Recuerda:
--Para las resistencias de 3 bandas se deshabilita la tolerancia ya que todos tienen una tolerancia predeterminada del 20%
 
--CAMPO TCR: El coeficiente de temperatura de resistencia (TCR) es el cálculo de un cambio relativo de resistencia por grado de cambio de temperatura. Se mide en ppm/°C (1 ppm = 0,0001 %).
+- Para las resistencias de 3 bandas se deshabilita la tolerancia ya que todos tienen una tolerancia predeterminada del 20%
 
--VARIACIÓN DE TEMPERATURA: La entrada de datos para este valor solo se habilita para resistencias de 6 bandas
+- CAMPO TCR: El coeficiente de temperatura de resistencia (TCR) es el cálculo de un cambio relativo de resistencia por grado de cambio de temperatura. Se mide en ppm/°C (1 ppm = 0,0001 %).
+
+- VARIACIÓN DE TEMPERATURA: La entrada de datos para este valor solo se habilita para resistencias de 6 bandas
 
 - EN EL CAMPO TEMPERATURA INGRESAR EL INCREMENTO O DECREMENTO DE LA TEMPERATURA TENIENDO EN CUENTA  25°C PARA LA TEMPERATURA AMBIENTE
 - EJEMPLO DE RESULTADO:
