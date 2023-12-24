@@ -6,8 +6,9 @@ Recuerda:
 -CAMPO TCR: El coeficiente de temperatura de resistencia (TCR) es el cálculo de un cambio relativo de resistencia por grado de cambio de temperatura. Se mide en ppm/°C (1 ppm = 0,0001 %).
 -VARIACIÓN DE TEMPERATURA: La entrada de datos para este valor solo se habilita para resistencias de 6 bandas
 
-EJEMPLO DE RESULTADO:
 - EN EL CAMPO TEMPERATURA INGRESAR EL INCREMENTO O DECREMENTO DE LA TEMPERATURA TENIENDO EN CUENTA  25°C PARA LA TEMPERATURA AMBIENTE
+EJEMPLO DE RESULTADO:
+
  ==================================================
 
             NÚMERO DE BANDAS : 6                    # LA RESISTENCIA TIENE 3 BANDAS
@@ -20,6 +21,6 @@ EJEMPLO DE RESULTADO:
                  TEMPERATURA : +10°C                # + O -  AL INGRESAR EL DATO INDICAMOS SI LA TEMPERATURA AUMENTA O DISMINUYE
     TOLERANCIA CON Temp.  +/-: 0.0105 Ω             # TOLERANCIA + o - CON RESULTADO EN OHMIOS 
      VALOR NOMINAL CON Temp. : 10.5105 Ω            # VALOR NOMINAL SI LA TEMPERATURA AUMENTA EN +10°C
-% DE VARIACIÓN CON Temp.  +/-: 0.1%                 # PORCENTAJE DE VARIACIÓN CON X °c TEMPERATURA
+    % DE VARIACIÓN CON Temp.  +/-: 0.1%             # PORCENTAJE DE VARIACIÓN CON X °c TEMPERATURA
 ==================================================
          
