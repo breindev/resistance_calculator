@@ -7,7 +7,7 @@ Recuerda:
 -VARIACIÓN DE TEMPERATURA: La entrada de datos para este valor solo se habilita para resistencias de 6 bandas
 
 - EN EL CAMPO TEMPERATURA INGRESAR EL INCREMENTO O DECREMENTO DE LA TEMPERATURA TENIENDO EN CUENTA  25°C PARA LA TEMPERATURA AMBIENTE
-EJEMPLO DE RESULTADO:
+- EJEMPLO DE RESULTADO:
 
  ==================================================
 
