@@ -48,11 +48,11 @@ Label(F_variacion,text="°C").pack(side=LEFT)
 
 #------------------ RESULTADO --------------------
 F_respuesta = LabelFrame(FRAME_CONT,text="RESULTADO")
-lbl = ["NÚMERO DE BANDAS :","VALORES DE BANDAS:",
+lbl = ["NÚMERO DE BANDAS :","DÍGITOS DE BANDAS:",
        "TOLERANCIA +/- :","V. NOMINAL MÁXIMO :",
        "VALOR NOMINAL :","V. NOMINAL MÍNIMO :",
-       "TEMPERATURA :","TOLERANCIA CON Temp.  +/-:","VALOR N. Max CON Temp. :","VALOR NOMINAL CON Temp. :","VALOR N. Min CON Temp. :","% DE VARIACIÓN CON Temp.  +/-:"]
-resultado = Text(F_respuesta,width=50,height=15)
+       "TEMPERATURA :","TOLERANCIA CON Temp.  +/-:","VALOR NOMINAL CON Temp. :","% DE VARIACIÓN CON Temp.  +/-:"]
+resultado = Text(F_respuesta,width=60,height=13)
 resultado.grid(row=1,column=0,padx=10,pady=10)
 #--------------------------------------------------
 
@@ -63,9 +63,8 @@ def calculate(n_bandas):
         minimo,maximo= 0,0
         tolerancia = 0
         tolerancia_temp = 0
-        valor_nominal_temp = 0
+        valor_nominal_temp = StringVar()
         porcentaje_tolerancia = 0
-        minimo_temp,maximo_temp = 0,0
         if n_bandas in "34":
             num_resistencia.set(int(c1.get_select()+c2.get_select()))
             valor_nominal = num_resistencia.get()*float(c4.get_select())
@@ -81,27 +80,26 @@ def calculate(n_bandas):
                 valor_nominal = num_resistencia.get()*float(c4.get_select())
                 tolerancia = valor_nominal*(float(c5.get_select())/100)
                 minimo,maximo= valor_nominal-tolerancia,valor_nominal+tolerancia
-            case"6":
+            case "6":
                 num_resistencia.set(int(c1.get_select()+c2.get_select()+c3.get_select()))
                 valor_nominal = num_resistencia.get()*float(c4.get_select())
                 tolerancia = valor_nominal*(float(c5.get_select())/100)
                 minimo,maximo= valor_nominal-tolerancia,valor_nominal+tolerancia
                 # TOLERANCIA CON TEMPERATURA            
-                tolerancia_temp =  round(valor_nominal*(int(c6.get_select())/1000000)*int(Temperatura.get()),4)
                 # PORCENTAJE DE TOLERANCIA CON VARIACION DE TEMPERATURA
-                if Temperatura.get()[0] == "+": valor_nominal_temp = valor_nominal+tolerancia_temp
-                elif Temperatura.get()[0] == "-": valor_nominal_temp = valor_nominal-tolerancia_temp
+                if Temperatura.get()[0] in "+-":
+                    tolerancia_temp =  round(valor_nominal*(int(c6.get_select())/1000000)*int(Temperatura.get()[1:]),4)
+                    valor_nominal_temp.set((valor_nominal-tolerancia_temp)if Temperatura.get()[0] == "-" else (valor_nominal+tolerancia_temp))
                 else:
-                    raise ValueError("La Temperatura debe tener un caracter iniciarl de + o -")
-                minimo_temp,maximo_temp = valor_nominal_temp-tolerancia_temp,valor_nominal_temp+tolerancia_temp
+                    messagebox.showinfo(message="LA TEMPERATURA DEBE CONTENER UN CARACTER + o - DE INCREMENTO O DECREMENTO", title="ADVERTENCIA", icon = "warning")
                 porcentaje_tolerancia = round((tolerancia_temp/valor_nominal)*100,4)
-        datos_resultado = [n_bandas,num_resistencia.get(),tolerancia,maximo,valor_nominal,minimo,Temperatura.get(),tolerancia_temp,maximo_temp,valor_nominal_temp,minimo_temp,porcentaje_tolerancia]
-        resultado.insert('end',"%50s"%('='*50)+"\n")
-        for i in range(12):
-            if i == 6: resultado.insert('end',"%40s\n"%('-'*30))
-            simbolo = ("\n" if i in [0,1,6,11] else " Ω\n") if i in [0,1,2,3,4,5,7,8,9,10] else ("%\n" if i == 11 else "°C\n")
+        datos_resultado = [n_bandas,num_resistencia.get(),tolerancia,maximo,valor_nominal,minimo,Temperatura.get(),tolerancia_temp,valor_nominal_temp.get(),porcentaje_tolerancia]
+        resultado.insert('end',"%50s"%('='*60)+"\n")
+        for i in range(10):
+            if i == 6: resultado.insert('end',"%50s\n"%('-'*40))
+            simbolo = ("\n" if i in [0,1,9] else " Ω\n") if i in [0,1,2,3,4,5,7,8] else ("%\n" if i == 9 else "°C\n")
             resultado.insert('end',f"%30s {datos_resultado[i]}"%(lbl[i])+simbolo)
-        resultado.insert('end',"%50s"%('='*50)+"\n")
+        resultado.insert('end',"%50s"%('='*60)+"\n")
     
     except(Exception):
         messagebox.showinfo(message="EXISTEN DATOS SELECCIONADOS\nQUE NO SON VÁLIDOS.", title="Advertencia", icon = "warning")
